@@ -2,10 +2,15 @@ import unittest
 
 
 class Product(object):
-    def __init__(self, name, sku, price, cost):
+    def __init__(self, name: str, sku: str, price: float, cost: float):
         """
         The product will contain it's name,
         price, cost, sku, and price history.
+        >>> sweet_potato = Product(name='sweet potato', sku='001', price=1.00, cost=0.50)
+        >>> sweet_potato.name = 'sweet potato'
+        >>> sweet_potato.price = 1.00
+        >>> sweet_potato.cost = 0.50
+        >>> sweet_potato.sku = '001'
         """
         self._validate_values(name, sku, price, cost)
         self.name = name
@@ -15,7 +20,15 @@ class Product(object):
         self.price_history = []
 
     @staticmethod
-    def _validate_values(name, sku, price, cost):
+    def _validate_values(name: str, sku: str, price: float, cost: float):
+        """
+        Validates the class initializer parameters
+        :param name: name of the product
+        :param sku: stock keeping unit code
+        :param price: price that the consumer will pay for the product
+        :param cost: cost that the owner paid for the product
+        :raises TypeError:
+        """
         if not name or not isinstance(name, str):
             raise TypeError('A correct name must be provided')
         if not sku or not isinstance(sku, str):
@@ -25,14 +38,15 @@ class Product(object):
         if not cost or not isinstance(cost, (float, int)):
             raise TypeError('Cost must be provided')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
+
 
 param_name_sku_list = [(1), ([]), (''), ({})]
 param_cost_price_list = [("abc"), ([]), (''), ({})]
 
 
-class TestSupermarket(unittest.TestCase):
+class TestProduct(unittest.TestCase):
     def test_product_must_raise_error_when_instantiated_with_no_properties(self):
         with self.assertRaises(TypeError):
             Product()
