@@ -7,6 +7,15 @@ class Product(object):
         The product will contain it's name,
         price, cost, sku, and price history.
         """
+        self._validate_values(name, sku, price, cost)
+        self.name = name
+        self.sku = sku
+        self.price = float(price)
+        self.cost = float(cost)
+        self.price_history = []
+
+    @staticmethod
+    def _validate_values(name, sku, price, cost):
         if not name or not isinstance(name, str):
             raise TypeError('A correct name must be provided')
         if not sku or not isinstance(sku, str):
@@ -16,15 +25,8 @@ class Product(object):
         if not cost or not isinstance(cost, (float, int)):
             raise TypeError('Cost must be provided')
 
-        self.name = name
-        self.sku = sku
-        self.price = float(price)
-        self.cost = float(cost)
-        self.price_history = []
-
     def __str__(self):
         return self.name
-
 
 param_name_sku_list = [(1), ([]), (''), ({})]
 param_cost_price_list = [("abc"), ([]), (''), ({})]
