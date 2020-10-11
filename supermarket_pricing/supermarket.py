@@ -8,6 +8,11 @@ class Supermarket(object):
         all the products registered in it.
         """
         self.name = name
+        self.products = None
+
+    def __str__(self):
+        """Returns the name of the supermarket"""
+        return self.name
 
 
 class TestSupermarket(unittest.TestCase):
@@ -23,6 +28,11 @@ class TestSupermarket(unittest.TestCase):
     def test_supermaket_must_be_instantiated_with_no_products(self):
         supermarket = Supermarket('mYrket')
         self.assertEqual(supermarket.products, None)
+
+    def test_supermarket_string_method_must_return_the_name(self):
+        supermarket = Supermarket('mYrket')
+        self.assertEqual(str(supermarket), 'mYrket')
+
 
 if __name__ == '__main__':
     unittest.main()
