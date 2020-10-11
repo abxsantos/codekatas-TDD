@@ -2,12 +2,28 @@ import unittest
 
 
 class Product(object):
-    def __init__(self):
+    def __init__(self, name, sku, price, cost):
         """
         The product will contain it's name,
         price, cost, sku, and price history.
         """
-        pass
+        if not name or not isinstance(name, str):
+            raise TypeError('A correct name must be provided')
+        if not sku or not isinstance(sku, str):
+            raise TypeError('SKU must be provided')
+        if not price or not isinstance(price, (float, int)):
+            raise TypeError('Price must be provided')
+        if not cost or not isinstance(cost, (float, int)):
+            raise TypeError('Cost must be provided')
+
+        self.name = name
+        self.sku = sku
+        self.price = float(price)
+        self.cost = float(cost)
+        self.price_history = []
+
+    def __str__(self):
+        return self.name
 
 
 param_name_sku_list = [(1), ([]), (''), ({})]
@@ -15,7 +31,6 @@ param_cost_price_list = [("abc"), ([]), (''), ({})]
 
 
 class TestSupermarket(unittest.TestCase):
-
     def test_product_must_raise_error_when_instantiated_with_no_properties(self):
         with self.assertRaises(TypeError):
             Product()
@@ -60,7 +75,7 @@ class TestSupermarket(unittest.TestCase):
                 with self.assertRaises(TypeError):
                     Product(name='beans', cost=0.50, price=param_price, sku='123')
 
-    def test_product_must_sbe_instantiated_given_correct_properties(self):
+    def test_product_must_be_instantiated_given_correct_properties(self):
         product = Product(name='beans', cost=0.50, price=1.00, sku='001')
         self.assertEqual(product.name, 'beans')
         self.assertEqual(product.cost, 0.50)
@@ -72,8 +87,8 @@ class TestSupermarket(unittest.TestCase):
         self.assertEqual(product.price_history, [])
 
     def test_product_string_method_must_return_the_name(self):
-        supermarket = Product(name='beans', cost=0.50, price=1.00, sku='001')
-        self.assertEqual(str(supermarket), 'mYrket')
+        product = Product(name='beans', cost=0.50, price=1.00, sku='001')
+        self.assertEqual(str(product), 'beans')
 
 
 if __name__ == '__main__':
