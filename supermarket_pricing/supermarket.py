@@ -20,6 +20,9 @@ class TestSupermarket(unittest.TestCase):
         with self.assertRaises(TypeError):
             Supermarket()
 
+    def test_supermaket_must_be_instantiated_with_no_products(self):
+        supermarket = Supermarket('mYrket')
+        self.assertEqual(supermarket.products, None)
 
 if __name__ == '__main__':
     unittest.main()
