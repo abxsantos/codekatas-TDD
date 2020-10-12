@@ -39,4 +39,4 @@ Contributions are always welcome!
 
 Add your own katas instructions to this repo or send your methods!
 
- **Also be sure to read the contribution guidelines before sending your request!**
+ **Also be sure to read the [contribution guidelines](https://github.com/abxsantos/codekatas-TDD/blob/main/CONTRIBUTING.md) before sending your request!**
