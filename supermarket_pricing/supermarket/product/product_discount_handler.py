@@ -1,8 +1,8 @@
 import unittest
 
+from supermarket import Supermarket
 from supermarket_pricing.supermarket.product.product_inserter import ProductInserter
 from supermarket_pricing.supermarket.product.products import Product
-from supermarket_pricing.supermarket import Supermarket
 
 
 class ProductBundleDiscountHandler(object):
@@ -16,14 +16,13 @@ class ProductBundleDiscountHandler(object):
         If the discount doesn't apply to a bundle, a modification of price
         with the ProductHistoryHandler should be used instead.
 
-        >>> sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003', unit='un',
-        ... stock_quantity=100)
+        >>> sweet_potato_product = Product(name='sweet_potato', cost=0.50, price=1.00, sku='001', unit='un', stock_quantity=100)
         >>> myrket_supermarket = Supermarket('mYrket')
         >>> ProductInserter(supermarket=myrket_supermarket, products=[sweet_potato_product]).add_products()
         >>> ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
-        ... discount_product_quantity=50, discount_product_sku='003-discount').create_bundle_discount()
+        ... discount_product_quantity=50, discount_product_sku='001-discount').create_bundle_discount()
         >>> ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket,
-        ... discount_product_sku='003-discount').restore_bundle_discount_products()
+        ... discount_product_sku='001-discount').restore_bundle_discount_products()
         """
         self.product = product
         self.supermarket = supermarket
@@ -49,7 +48,7 @@ class ProductBundleDiscountHandler(object):
         ProductInserter(supermarket=self.supermarket, products=[discount_product]).add_products()
         return discount_product
 
-    def create_bundle_discount(self) -> Product:
+    def create_bundle_discount(self):
         """
         Must create a discount product entry into
         the supermarket with discount price and quantity
@@ -58,9 +57,9 @@ class ProductBundleDiscountHandler(object):
         if self.discount_product_quantity > self.product.stock_quantity:
             raise ValueError('The discount product quantity is smaller than what is available in stock')
         self.product.stock_quantity -= self.discount_product_quantity
-        return self._discount_product_creator()
+        self._discount_product_creator()
 
-    def restore_bundle_discount_products(self) -> Product:
+    def restore_bundle_discount_products(self):
         """
         Restores the given discount product
         to it's original product stock quantity
@@ -69,7 +68,6 @@ class ProductBundleDiscountHandler(object):
             if discount_product.sku == self.discount_product_sku:
                 self.product.stock_quantity += discount_product.stock_quantity
                 discount_product.stock_quantity = 0
-                return self.product
 
 
 class TestProductDiscountHandler(unittest.TestCase):
