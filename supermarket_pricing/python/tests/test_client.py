@@ -1,7 +1,7 @@
 import unittest
 
-from cart.cart import CartProduct
 from client.client import Client
+from product.product_bundle_discount import ProductBundleDiscount
 from product.products import Product
 
 
@@ -76,11 +76,18 @@ class TestClient(unittest.TestCase):
         wilson.add_product_to_cart(sweet_potato, 100)
         with self.assertRaises(Exception):
             wilson.pay()
-    #
-    # def test_pay_must_remove_correct_quantity_from_user_wallet(self):
-    #     wilson = Client(name='Wilson', wallet=10.00)
-    #     sweet_potato = Product(name='sweet_potato', sku='001', price=1.00, cost=0.50, stock_quantity=100, unit='Kg')
-    #     cart_sweet_potato = CartProduct(product=sweet_potato, quantity=3)
-    #     wilson.add_product_to_cart(cart_sweet_potato)
-    #     wilson.pay()
-    #     self.assertEqual(wilson.wallet, 7.00)
+
+    def test_pay_must_remove_correct_quantity_from_user_wallet(self):
+        wilson = Client(name='Wilson', wallet=10.00)
+        sweet_potato = Product(name='sweet_potato', sku='001', price=1.00, cost=0.50, stock_quantity=100, unit='Kg')
+        wilson.add_product_to_cart(sweet_potato, 3)
+        wilson.pay()
+        self.assertEqual(wilson.wallet, 7.00)
+
+    def test__calculate_cart_price_must_consider_and_apply_bundle_discounts(self):
+        wilson = Client(name='Wilson', wallet=10.00)
+        bundle_discount = ProductBundleDiscount(bundle_quantity=2, bundle_price=0.50)
+        sweet_potato = Product(name='sweet_potato', sku='001', price=1.00, cost=0.50,
+                               stock_quantity=100, unit='Kg', bundle_discount=bundle_discount)
+        wilson.add_product_to_cart(sweet_potato, 3)
+        self.assertEqual(wilson._calculate_cart_price(), 2)

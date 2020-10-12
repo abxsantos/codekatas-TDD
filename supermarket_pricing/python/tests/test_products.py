@@ -1,6 +1,7 @@
 import unittest
 from datetime import datetime
 
+from product.product_bundle_discount import ProductBundleDiscount
 from product.products import Product
 
 param_name_sku_list = [(1), ([]), (''), ({})]
@@ -69,6 +70,9 @@ class TestProduct(unittest.TestCase):
         product = Product(name='beans', cost=0.50, price=1.00, sku='001', unit='un', stock_quantity=100)
         self.assertEqual(str(product), 'beans')
 
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_product_can_be_associated_with_a_bundle_discount(self):
+        bundle_discount = ProductBundleDiscount(bundle_quantity=2, bundle_price=0.50)
+        product = Product(name='beans', cost=0.50, price=1.00, sku='001', unit='un',
+                          stock_quantity=100, bundle_discount=bundle_discount)
+        self.assertEqual(product.bundle_discount.bundle_quantity, 2)
+        self.assertEqual(product.bundle_discount.bundle_price, 0.50)

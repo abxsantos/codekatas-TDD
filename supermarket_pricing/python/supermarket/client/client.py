@@ -47,14 +47,26 @@ class Client(object):
             self.cart.remove(cart_product)
         cart_product.restore_item_to_stock(removed_quantity)
 
+    @staticmethod
+    def _handle_bundle_price(total_price: float, cart_product: CartProduct) -> float:
+        not_in_bundle_quantity = cart_product.quantity % cart_product.product.bundle_discount.bundle_quantity
+        bundle_products_quantity = cart_product.quantity // cart_product.product.bundle_discount.bundle_quantity
+        total_price += ((cart_product.product.price * not_in_bundle_quantity) +
+                        (cart_product.product.bundle_discount.bundle_price *
+                         bundle_products_quantity *
+                         cart_product.product.bundle_discount.bundle_quantity))
+        return total_price
+
     def _calculate_cart_price(self) -> float:
         """Calculates the cart total value"""
         total_price = 0
         for cart_product in self.cart:
-            total_price += (cart_product.product.price * cart_product.quantity)
+            if cart_product.product.bundle_discount:
+                total_price = self._handle_bundle_price(total_price, cart_product)
+            else:
+                total_price += (cart_product.product.price * cart_product.quantity)
         return total_price
 
-    # TODO: Refactor this to handle logic of bundle discount products
     def pay(self):
         """
         Pays for the cart total value

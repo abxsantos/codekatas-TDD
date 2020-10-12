@@ -1,9 +1,10 @@
-import unittest
 from datetime import datetime
+
+from product.product_bundle_discount import ProductBundleDiscount
 
 
 class Product(object):
-    def __init__(self, name: str, sku: str, price: float, cost: float, stock_quantity: int, unit: str):
+    def __init__(self, name, sku, price, cost, stock_quantity, unit, bundle_discount=None):
         """
         The product will contain it's name,
         price, cost, sku, and price history.
@@ -17,13 +18,14 @@ class Product(object):
         >>> sweet_potato.unit = 'Kg'
         """
         self._validate_values(name, sku, price, cost)
-        self.name = name
-        self.sku = sku
-        self.price = float(price)
-        self.cost = float(cost)
-        self.price_history = self._create_price_history()
-        self.stock_quantity = stock_quantity
-        self.unit = unit
+        self.name: str = name
+        self.sku: str = sku
+        self.price: float = float(price)
+        self.cost: float = float(cost)
+        self.price_history: [(float, datetime)] = self._create_price_history()
+        self.stock_quantity: int = stock_quantity
+        self.unit: str = unit
+        self.bundle_discount: ProductBundleDiscount = bundle_discount
 
     @staticmethod
     def _validate_values(name: str, sku: str, price: float, cost: float):
