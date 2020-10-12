@@ -2,6 +2,13 @@
 
 ## How Can I Contribute?
 
+#### Suggest improvements!
+Suggest improvements for the readme and this guideline! To do that just open an issue.
+
+You can also open an issue to suggest improvements in the kata problems.
+
+You can also open issues to discuss a given kata problem. Just check if one isn't open already before opening one yourself.
+
 #### Add you own kata problem!
 To do that create a new folder with the kata name in **snake_case** and add the given rules for the kata in a file written in markdown.
 
