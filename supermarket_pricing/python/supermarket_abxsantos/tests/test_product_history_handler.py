@@ -1,8 +1,8 @@
 import unittest
 from datetime import datetime
 
-from product.product_history_handler import ProductHistoryHandler
-from product.products import Product
+from src.product import ProductHistoryHandler
+from src.product.products import Product
 
 
 class TestProductHistoryHandler(unittest.TestCase):

@@ -1,6 +1,4 @@
-import unittest
-
-from product.products import Product
+from src.product.products import Product
 
 
 class CartProduct(object):

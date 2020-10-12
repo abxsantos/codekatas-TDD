@@ -1,7 +1,7 @@
 import unittest
 
-from cart.cart import CartProduct
-from product.products import Product
+from src.cart import CartProduct
+from src.product.products import Product
 
 
 class TestCartProduct(unittest.TestCase):

@@ -1,6 +1,6 @@
 import unittest
 
-from product.product_bundle_discount import ProductBundleDiscount
+from src.product import ProductBundleDiscount
 
 
 class TestBundleDiscount(unittest.TestCase):

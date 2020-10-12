@@ -1,8 +1,8 @@
 import unittest
 from datetime import datetime
 
-from product.product_bundle_discount import ProductBundleDiscount
-from product.products import Product
+from src.product import ProductBundleDiscount
+from src.product.products import Product
 
 param_name_sku_list = [(1), ([]), (''), ({})]
 param_cost_price_list = [("abc"), ([]), (''), ({})]

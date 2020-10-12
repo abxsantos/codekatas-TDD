@@ -1,8 +1,8 @@
 import unittest
 
-from client.client import Client
-from product.product_bundle_discount import ProductBundleDiscount
-from product.products import Product
+from src.client import Client
+from src.product import ProductBundleDiscount
+from src.product.products import Product
 
 
 class TestClient(unittest.TestCase):

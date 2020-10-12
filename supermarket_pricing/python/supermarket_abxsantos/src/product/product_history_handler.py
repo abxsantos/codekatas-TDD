@@ -1,7 +1,6 @@
-import unittest
 from datetime import datetime
 
-from product.products import Product
+from src.product.products import Product
 
 
 class ProductHistoryHandler(object):

@@ -1,6 +1,6 @@
 import unittest
 
-from supermarket import Supermarket
+from src.supermarket import Supermarket
 
 
 class TestSupermarket(unittest.TestCase):

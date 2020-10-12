@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from product.product_bundle_discount import ProductBundleDiscount
+from src.product import ProductBundleDiscount
 
 
 class Product(object):

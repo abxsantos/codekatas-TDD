@@ -1,10 +1,7 @@
-import unittest
-
-
 class Supermarket(object):
     def __init__(self, name: str):
         """
-        The supermarket will contain it's name and
+        The supermarket_abxsantos will contain it's name and
         all the products registered in it.
 
         >>> my_markek = Supermarket('mYrket')

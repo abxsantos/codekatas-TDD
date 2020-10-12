@@ -1,8 +1,8 @@
 import unittest
 
-from product.product_inserter import ProductInserter
-from product.products import Product
-from supermarket import Supermarket
+from src.product import ProductInserter
+from src.product.products import Product
+from src.supermarket import Supermarket
 
 
 class TestProductInserter(unittest.TestCase):
