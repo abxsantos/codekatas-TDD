@@ -6,6 +6,7 @@ class Supermarket(object):
         """
         The supermarket will contain it's name and
         all the products registered in it.
+
         >>> my_markek = Supermarket('mYrket')
         >>> my_markek.name = 'mYrket'
         >>> my_markek.products = []

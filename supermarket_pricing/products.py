@@ -7,6 +7,7 @@ class Product(object):
         """
         The product will contain it's name,
         price, cost, sku, and price history.
+
         >>> sweet_potato = Product(name='sweet_potato', sku='001', price=1.00, cost=0.50, stock_quantity=100, unit='Kg')
         >>> sweet_potato.name = 'sweet_potato'
         >>> sweet_potato.price = 1.00

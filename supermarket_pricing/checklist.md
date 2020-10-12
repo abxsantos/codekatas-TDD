@@ -29,7 +29,7 @@
         No. Costs are related to what the owner pays for the product, 
       prices are related to what the consumer will pay.
 
-- [ ] If a shelf of 100 cans is priced using "buy two get one free" how the stock is valued?
+- [X] If a shelf of 100 cans is priced using "buy two get one free" how the stock is valued?
         The stock can be divided, using a new SKU to track down 
       the prices of two items.
         

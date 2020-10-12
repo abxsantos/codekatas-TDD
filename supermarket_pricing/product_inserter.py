@@ -9,6 +9,7 @@ class ProductInserter(object):
         """
         Used to insert products into the supermarket.
         Concerned with adding a new product to the supermarket.
+
         >>> bean_product = Product(name='beans', cost=0.50, price=1.00, sku='001')
         >>> myrket_supermarket = Supermarket('mYrket')
         >>> ProductInserter(supermarket=myrket_supermarket, products=[bean_product]).add_products()
