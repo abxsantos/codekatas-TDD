@@ -1,6 +1,6 @@
 import unittest
 
-from cart import CartProduct
+from cart.cart import CartProduct
 from product.products import Product
 
 

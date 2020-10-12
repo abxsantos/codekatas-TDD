@@ -1,8 +1,8 @@
 import unittest
 
-from supermarket import Supermarket
 from product.product_inserter import ProductInserter
 from product.products import Product
+from supermarket import Supermarket
 
 
 class ProductBundleDiscountHandler(object):
@@ -78,7 +78,8 @@ class TestProductDiscountHandler(unittest.TestCase):
         ProductInserter(supermarket=myrket_supermarket,
                         products=[sweet_potato_product]).add_products()
         ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
-                                     discount_product_quantity=50, discount_product_sku='003-discount').create_bundle_discount()
+                                     discount_product_quantity=50,
+                                     discount_product_sku='003-discount').create_bundle_discount()
         self.assertEqual(myrket_supermarket.products[0].price, 1.00)
         self.assertEqual(myrket_supermarket.products[0].stock_quantity, 50)
         self.assertEqual(myrket_supermarket.products[0].sku, '003')
@@ -90,7 +91,8 @@ class TestProductDiscountHandler(unittest.TestCase):
         ProductInserter(supermarket=myrket_supermarket,
                         products=[sweet_potato_product]).add_products()
         ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
-                                     discount_product_quantity=50, discount_product_sku='003-discount').create_bundle_discount()
+                                     discount_product_quantity=50,
+                                     discount_product_sku='003-discount').create_bundle_discount()
         self.assertEqual(len(myrket_supermarket.products), 2)
         self.assertEqual(myrket_supermarket.products[1].price, 1.25)
         self.assertEqual(myrket_supermarket.products[1].stock_quantity, 50)
@@ -103,7 +105,8 @@ class TestProductDiscountHandler(unittest.TestCase):
         ProductInserter(supermarket=myrket_supermarket,
                         products=[sweet_potato_product]).add_products()
         ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
-                                     discount_product_quantity=50, discount_product_sku='003-discount').create_bundle_discount()
+                                     discount_product_quantity=50,
+                                     discount_product_sku='003-discount').create_bundle_discount()
         ProductBundleDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket,
                                      discount_product_sku='003-discount').restore_bundle_discount_products()
         self.assertEqual(len(myrket_supermarket.products), 2)
