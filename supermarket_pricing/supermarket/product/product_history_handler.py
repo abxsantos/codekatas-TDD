@@ -1,7 +1,7 @@
 import unittest
 from datetime import datetime
 
-from supermarket_pricing.products import Product
+from supermarket_pricing.supermarket.product.products import Product
 
 
 class ProductHistoryHandler(object):

@@ -1,6 +1,6 @@
 import unittest
 
-from supermarket_pricing.products import Product
+from supermarket_pricing.supermarket.product.products import Product
 from supermarket_pricing.supermarket import Supermarket
 
 
