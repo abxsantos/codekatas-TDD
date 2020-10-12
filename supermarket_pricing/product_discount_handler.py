@@ -8,7 +8,7 @@ from supermarket_pricing.supermarket import Supermarket
 class ProductDiscountHandler(object):
     def __init__(self):
         """
-        Concerned with creating promotions.
+        Concerned with creating discounts.
         """
         pass
 
