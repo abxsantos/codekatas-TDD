@@ -1,7 +1,7 @@
 import unittest
 
-from supermarket_pricing.supermarket.cart.cart import CartProduct
-from supermarket_pricing.supermarket.product.products import Product
+from cart import CartProduct
+from product.products import Product
 
 
 class Client(object):

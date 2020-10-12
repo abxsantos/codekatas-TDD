@@ -1,6 +1,6 @@
 import unittest
 
-from supermarket_pricing.supermarket.product.products import Product
+from product.products import Product
 
 
 class CartProduct(object):

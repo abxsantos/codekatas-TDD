@@ -1,7 +1,7 @@
 import unittest
 
-from supermarket_pricing.supermarket.product.products import Product
-from supermarket_pricing.supermarket.supermarket import Supermarket
+from product.products import Product
+from supermarket_pricing.python.supermarket import Supermarket
 
 
 class ProductInserter(object):

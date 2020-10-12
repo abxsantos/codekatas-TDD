@@ -1,8 +1,8 @@
 import unittest
 
 from supermarket import Supermarket
-from supermarket_pricing.supermarket.product.product_inserter import ProductInserter
-from supermarket_pricing.supermarket.product.products import Product
+from product.product_inserter import ProductInserter
+from product.products import Product
 
 
 class ProductBundleDiscountHandler(object):
