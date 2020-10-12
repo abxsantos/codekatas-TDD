@@ -109,7 +109,9 @@ class TestProduct(unittest.TestCase):
 
     def test_product_must_start_with_an_empty_price_history(self):
         product = Product(name='beans', cost=0.50, price=1.00, sku='001', unit='un', stock_quantity=100)
-        self.assertEqual(product.price_history, [])
+        now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+        print(product.price_history)
+        self.assertEqual(product.price_history, [(1.00, now)])
 
     def test_product_string_method_must_return_the_name(self):
         product = Product(name='beans', cost=0.50, price=1.00, sku='001', unit='un', stock_quantity=100)

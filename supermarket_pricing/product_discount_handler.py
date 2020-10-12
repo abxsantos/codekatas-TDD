@@ -6,31 +6,103 @@ from supermarket_pricing.supermarket import Supermarket
 
 
 class ProductDiscountHandler(object):
-    def __init__(self):
+    def __init__(self, product: Product, supermarket: Supermarket, discount_price=None,
+                 discount_product_quantity=None, discount_product_sku=None):
         """
         Concerned with creating discounts.
+        >>> sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003', unit='un',
+        ... stock_quantity=100)
+        >>> myrket_supermarket = Supermarket('mYrket')
+        >>> ProductInserter(supermarket=myrket_supermarket, products=[sweet_potato_product]).add_products()
+        >>> ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
+        ... discount_product_quantity=50, discount_product_sku='003-discount').create_discount()
+        >>> ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket,
+        ... discount_product_sku='003-discount').restore_discount_products()
         """
-        pass
+        self.product = product
+        self.supermarket = supermarket
+        self.discount_price: float = discount_price
+        self.discount_product_quantity: int = discount_product_quantity
+        if not discount_product_sku:
+            self.discount_product_sku: str = f'{product.sku}-discount'
+        else:
+            self.discount_product_sku: str = discount_product_sku
+
+    def create_discount(self) -> Product:
+        """
+        Must create a discount product entry into
+        the supermarket with discount price and quantity
+        that will be removed from the stock quantity of original product
+        """
+
+        # check if the given quantity to remove is >= stock quantity
+        if self.discount_product_quantity > self.product.stock_quantity:
+            raise ValueError('The discount product quantity is smaller than what is available in stock')
+        # subtract the stock quantity from the given quantity
+        self.product.stock_quantity -= self.discount_product_quantity
+        # create a new product entry with the given price, quantity and sku
+        # the new product should have the same unit and cost
+        discount_product = Product(name=self.product.name,
+                                   stock_quantity=self.discount_product_quantity,
+                                   price=self.discount_price,
+                                   unit=self.product.unit,
+                                   cost=self.product.cost,
+                                   sku=self.discount_product_sku)
+        ProductInserter(supermarket=self.supermarket, products=[discount_product]).add_products()
+        return discount_product
+
+    def restore_discount_products(self) -> Product:
+        """
+        Restores the given discount product
+        to it's original product stock quantity
+        """
+        for discount_product in self.supermarket.products:
+            if discount_product.sku == self.discount_product_sku:
+                self.product.stock_quantity += discount_product.stock_quantity
+                discount_product.stock_quantity = 0
+                return self.product
 
 
 class TestProductDiscountHandler(unittest.TestCase):
     def test_create_discount_must_change_the_quantity_of_product(self):
-        sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003')
+        sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003', unit='un',
+                                       stock_quantity=100)
         myrket_supermarket = Supermarket('mYrket')
         ProductInserter(supermarket=myrket_supermarket,
                         products=[sweet_potato_product]).add_products()
-        ProductDiscountHandler(myrket_supermarket, 1.25, 50, '003-discount').create_discount()
-        self.assertEqual(len(myrket_supermarket.products[0].price), 1.00)
-        self.assertEqual(len(myrket_supermarket.products[0].stock_quantity), 50)
-        self.assertEqual(len(myrket_supermarket.products[0].sku), '003')
+        ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
+                               discount_product_quantity=50, discount_product_sku='003-discount').create_discount()
+        self.assertEqual(myrket_supermarket.products[0].price, 1.00)
+        self.assertEqual(myrket_supermarket.products[0].stock_quantity, 50)
+        self.assertEqual(myrket_supermarket.products[0].sku, '003')
 
     def test_create_discount_must_create_a_new_discount_product_with_given_parameters(self):
-        sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003')
+        sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003', unit='un',
+                                       stock_quantity=100)
         myrket_supermarket = Supermarket('mYrket')
         ProductInserter(supermarket=myrket_supermarket,
                         products=[sweet_potato_product]).add_products()
-        ProductDiscountHandler(myrket_supermarket, 1.25, 50, '003-discount').create_discount()
+        ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
+                               discount_product_quantity=50, discount_product_sku='003-discount').create_discount()
         self.assertEqual(len(myrket_supermarket.products), 2)
-        self.assertEqual(len(myrket_supermarket.products[1].price), 1.25)
-        self.assertEqual(len(myrket_supermarket.products[1].stock_quantity), 50)
-        self.assertEqual(len(myrket_supermarket.products[1].sku), '003-discount')
+        self.assertEqual(myrket_supermarket.products[1].price, 1.25)
+        self.assertEqual(myrket_supermarket.products[1].stock_quantity, 50)
+        self.assertEqual(myrket_supermarket.products[1].sku, '003-discount')
+
+    def test_restore_discount_product_must_restore_the_stock_quantity_of_original_with_given_parameters(self):
+        sweet_potato_product = Product(name='sweet potato', cost=0.50, price=1.00, sku='003', unit='un',
+                                       stock_quantity=100)
+        myrket_supermarket = Supermarket('mYrket')
+        ProductInserter(supermarket=myrket_supermarket,
+                        products=[sweet_potato_product]).add_products()
+        ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket, discount_price=1.25,
+                               discount_product_quantity=50, discount_product_sku='003-discount').create_discount()
+        ProductDiscountHandler(product=sweet_potato_product, supermarket=myrket_supermarket,
+                               discount_product_sku='003-discount').restore_discount_products()
+        self.assertEqual(len(myrket_supermarket.products), 2)
+        self.assertEqual(myrket_supermarket.products[0].price, 1.00)
+        self.assertEqual(myrket_supermarket.products[0].stock_quantity, 100)
+        self.assertEqual(myrket_supermarket.products[0].sku, '003')
+        self.assertEqual(myrket_supermarket.products[1].price, 1.25)
+        self.assertEqual(myrket_supermarket.products[1].stock_quantity, 0)
+        self.assertEqual(myrket_supermarket.products[1].sku, '003-discount')
