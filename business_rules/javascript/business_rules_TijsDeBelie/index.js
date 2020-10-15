@@ -1,5 +1,5 @@
-const {Client, Employee} = require("./classes/Person.js") 
-const {Product, products, states} = require("./classes/Store.js")
+const {Client, Employee} = require("./src/classes/Person.js") 
+const {Product, products, states} = require("./src/classes/Store.js")
 
 const Person1 = new Client("Tijs", false)
 const Employee1 = new Employee("Kris")

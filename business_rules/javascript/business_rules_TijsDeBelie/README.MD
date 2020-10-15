@@ -3,5 +3,5 @@ TO RUN TEST INSTALL JASMINE TESTING FRAMEWORK GLOBALLY
 
 TO RUN TESTS
 
-npx jasmine spec/Store.spec.js
+npx jasmine **/*spec.js
 
